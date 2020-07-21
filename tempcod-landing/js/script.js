@@ -130,8 +130,15 @@ menuLangItems.forEach(function (menuItem) {
 var changeTextsWithLang = function changeTextsWithLang() {
   var currentLang = lang;
   document.querySelectorAll('.multilang__text').forEach(function (textChangeElement) {
+    // Меняем плейсхолдер
+    if (textChangeElement.hasAttribute('placeholder')) {
+      textChangeElement.setAttribute('placeholder', textChangeElement.dataset["lang".concat(currentLang)]);
+      return;
+    }
+
     textChangeElement.textContent = textChangeElement.dataset["lang".concat(currentLang)];
   });
+  prepareText();
 }; // Show hide text
 
 
@@ -146,10 +153,10 @@ var toggleText = function toggleText(btn) {
 
   if (currentText === sib.dataset.shortText) {
     sib.textContent = sib.dataset.longText;
-    btn.textContent = 'Свернуть';
+    btn.textContent = lang === 'ru' ? 'Свернуть' : 'Roll up';
   } else {
     sib.textContent = sib.dataset.shortText;
-    btn.textContent = 'Развернуть';
+    btn.textContent = lang === 'ru' ? 'Развернуть' : 'Expand';
   }
 };
 
@@ -167,7 +174,7 @@ for (var i = 0; i < buttons.length; i++) {
 
 var prepareText = function prepareText() {
   document.querySelectorAll('.content').forEach(function (text) {
-    var currentText = text.textContent;
+    var currentText = text.dataset["lang".concat(lang)];
     var croppedText = currentText.substring(0, currentText.indexOf(' ', CHAR_TO_SHOW)) + '...';
     text.dataset.longText = currentText;
     text.dataset.shortText = croppedText;
@@ -180,7 +187,6 @@ var prepareText = function prepareText() {
       isTextCropped = false;
     }
   });
-  console.log('from prepare', isTextCropped);
 };
 
 var cropText = function cropText(needToCrop) {
