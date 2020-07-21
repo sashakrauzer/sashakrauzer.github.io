@@ -257,6 +257,7 @@ document.getElementById('show__modal').addEventListener('click', function (e) {
 }); //reCaptcha
 
 var contactForm = document.getElementById('contact__form');
+var moduleForm = document.querySelector('#module__form form');
 
 window.verifyCallback2 = function (response) {
   checkFormSubmitForDisable(contactForm);
@@ -296,7 +297,7 @@ var submitFormFunction = function submitFormFunction(form) {
   }
 
   var formData = new FormData();
-  form.querySelectorAll('input, select').forEach(function (element) {
+  form.querySelectorAll('input, select, textarea').forEach(function (element) {
     formData.append(element.name, element.value);
   });
   createLoadingSpinner(document.querySelector('.contact__form'));
@@ -312,9 +313,29 @@ var submitFormFunction = function submitFormFunction(form) {
   });
 };
 
+var submitModuleFormFunction = function submitModuleFormFunction(form) {
+  var formData = new FormData();
+  form.querySelectorAll('input, select, textarea').forEach(function (element) {
+    formData.append(element.name, element.value);
+  });
+  createLoadingSpinner(moduleForm);
+
+  _axios["default"].post(form.getAttribute('action'), formData).then(function (response) {
+    console.log(response);
+    destroyLoadingSpinner(moduleForm);
+  })["catch"](function (error) {
+    console.log(error);
+    destroyLoadingSpinner(moduleForm);
+  });
+};
+
 contactForm.addEventListener('submit', function (e) {
   e.preventDefault();
   submitFormFunction(contactForm);
+});
+moduleForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  submitModuleFormFunction(moduleForm);
 });
 
 var createLoadingSpinner = function createLoadingSpinner(parentElement) {
