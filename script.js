@@ -29,8 +29,7 @@ connectBtn.addEventListener("click", function () {
         .then((service) => {
             console.log("Service", service);
             return service.getCharacteristic(
-                // dataTransferService.characteristics.controlTransmit.uuid
-                "5cf052d4-2403-4719-a558-b7e72c48112f"
+                dataTransferService.characteristics.controlTransmit.uuid
             );
         })
         .then((characteristic) => {
@@ -43,6 +42,26 @@ connectBtn.addEventListener("click", function () {
             characteristic.addEventListener(
                 "characteristicvaluechanged",
                 handleNotifications
+            );
+
+            return server.getPrimaryService(dataTransferService.uuid);
+            // return characteristic.readValue();
+        })
+        .then((service) => {
+            return service.getCharacteristic(
+                dataTransferService.characteristics.status.uuid
+            );
+        })
+        .then((characteristic) => {
+            // Reading Battery Level…
+            return characteristic.startNotifications();
+        })
+        .then((characteristic) => {
+            console.log("Notification status", server);
+
+            characteristic.addEventListener(
+                "characteristicvaluechanged",
+                handleStatusTransferData
             );
 
             return server.getPrimaryService(dataTransferService.uuid);
@@ -82,16 +101,7 @@ function handleNotifications(event) {
         .getPrimaryService(dataTransferService.uuid)
         .then((ser) => {
             service = ser;
-            return service.getCharacteristic(
-                dataTransferService.characteristics.status.uuid
-            );
-        })
-        .then((characteristic) => {
-            return characteristic.startNotifications();
-        })
-        .then((characteristic) => {
-            characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
-            console.log("prepare to sending data 2...");
+
             return service.getCharacteristic(
                 dataTransferService.characteristics.dataReceive.uuid
             );
@@ -109,7 +119,7 @@ function handleNotifications(event) {
 }
 
 function handleStatusTransferData(value) {
-    console.log("handleStatusTransferData", value.buffer);
+    console.log("handleStatusTransferData", value, value.target.value.buffer);
     sendingData();
 }
 
