@@ -114,39 +114,309 @@ function handleStatusTransferData(value) {
 
 async function sendingData() {
     console.log("sendingData...");
-    // let startTransfer = Date.now() / 1000;
-    setTimeout(async () => {
-        for (
-            let sum = 0;
-            keyI < recipeBinary.buffer.byteLength && sum < 400;
-            keyI = keyI + 20, sum = sum + 20
-        ) {
-            try {
-                console.log(
-                    "recipeBinary await",
-                    recipeBinary.buffer.slice(keyI, keyI + 20)
-                );
-                await characteristicWrite.writeValue(
-                    recipeBinary.buffer.slice(keyI, keyI + 20)
-                );
-            } catch (e) {
-                console.log("catch", e);
-            }
-            // dispatch(
-            //     recipeByteTransfered(
-            //         recipeBinary.buffer.slice(keyI, keyI + 20).byteLength
-            //     )
-            // );
-            console.log(
-                "DataBuffer",
-                recipeBinary.buffer.slice(keyI, keyI + 20)
-            );
-        }
-    }, 100);
 
-    // let endTransfer = Date.now() / 1000;
+    // let sum = 0;
 
-    // dispatch(speedOfDataTransfer(400 / (endTransfer - startTransfer)));
+    // let timeOut = new Promise
+
+    // 1
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 2
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 3
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 4
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 5
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 6
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+    
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 7
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 8
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 9
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 10
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 11
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 12
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 13
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 14
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 15
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 16
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 17
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 18
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 19
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // 20
+    await characteristicWrite.writeValue(
+        recipeBinary.buffer.slice(keyI, keyI + 20)
+    );
+    keyI = keyI + 20;
+
+    console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
+
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 500);
+    });
+
+    // for (
+    //     let sum = 0;
+    //     keyI < recipeBinary.buffer.byteLength && sum < 400;
+    //     keyI = keyI + 20, sum = sum + 20
+    // ) {
+    //     try {
+    //         console.log(
+    //             "recipeBinary await",
+    //             recipeBinary.buffer.slice(keyI, keyI + 20)
+    //         );
+
+    //         await characteristicWrite.writeValue(
+    //             recipeBinary.buffer.slice(keyI, keyI + 20)
+    //         );
+    //     } catch (e) {
+    //         console.log("catch", e);
+    //     }
+    //     console.log("DataBuffer", recipeBinary.buffer.slice(keyI, keyI + 20));
+    // }
 }
 
 const deviceInformationService = {
