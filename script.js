@@ -90,7 +90,7 @@ function handleNotifications(event) {
             return characteristic.startNotifications();
         })
         .then((characteristic) => {
-            // characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
+            characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
             console.log("prepare to sending data 2...");
             return service.getCharacteristic(
                 dataTransferService.characteristics.dataReceive.uuid
@@ -399,35 +399,25 @@ async function sendingData() {
         }, writingTimeout);
     });
 
-    let service = null;
+    // let service = null;
 
-    server
-        .getPrimaryService(dataTransferService.uuid)
-        .then((ser) => {
-            service = ser;
-            return service.getCharacteristic(
-                dataTransferService.characteristics.status.uuid
-            );
-        })
-        .then((characteristic) => {
-            // characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
-            // console.log("prepare to sending data 2...");
-            // return service.getCharacteristic(
-            //     dataTransferService.characteristics.dataReceive.uuid
-            // );
-            return characteristic.readValue();
-        })
-        .then((value) => {
-            handleStatusTransferData(value);
-            // characteristicWrite = characteristic;
-            // console.log("prepare to sending data 3...");
-            // setTimeout(() => sendingData(), 2000);
-            // // sendingData();
-        })
-        .catch((error) => {
-            // dispatch(showAppPreloader(false));
-            console.log("read status error: " + error);
-        });
+    // server
+    //     .getPrimaryService(dataTransferService.uuid)
+    //     .then((ser) => {
+    //         service = ser;
+    //         return service.getCharacteristic(
+    //             dataTransferService.characteristics.status.uuid
+    //         );
+    //     })
+    //     .then((characteristic) => {
+    //         return characteristic.readValue();
+    //     })
+    //     .then((value) => {
+    //         handleStatusTransferData(value);
+    //     })
+    //     .catch((error) => {
+    //         console.log("read status error: " + error);
+    //     });
 
     // for (
     //     let sum = 0;
