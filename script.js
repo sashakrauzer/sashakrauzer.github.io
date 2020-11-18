@@ -2,6 +2,7 @@ let connectBtn = document.getElementById("connect");
 let server = null;
 let keyI = 0;
 let characteristicWrite = null;
+let writingTimeout = 0;
 
 connectBtn.addEventListener("click", function () {
     navigator.bluetooth
@@ -89,7 +90,7 @@ function handleNotifications(event) {
             return characteristic.startNotifications();
         })
         .then((characteristic) => {
-            characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
+            // characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
             console.log("prepare to sending data 2...");
             return service.getCharacteristic(
                 dataTransferService.characteristics.dataReceive.uuid
@@ -108,7 +109,7 @@ function handleNotifications(event) {
 }
 
 function handleStatusTransferData(value) {
-    console.log("handleStatusTransferData", value);
+    console.log("handleStatusTransferData", value.buffer);
     sendingData();
 }
 
@@ -130,7 +131,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 2
@@ -144,7 +145,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 3
@@ -158,7 +159,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 4
@@ -172,7 +173,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 5
@@ -186,7 +187,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 6
@@ -194,13 +195,13 @@ async function sendingData() {
         recipeBinary.buffer.slice(keyI, keyI + 20)
     );
     keyI = keyI + 20;
-    
+
     console.log("DataBuffer", recipeBinary.buffer.slice(keyI));
 
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 7
@@ -214,7 +215,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 8
@@ -228,7 +229,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 9
@@ -242,7 +243,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 10
@@ -256,7 +257,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 11
@@ -270,7 +271,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 12
@@ -284,7 +285,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 13
@@ -297,7 +298,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 14
@@ -311,7 +312,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 15
@@ -325,7 +326,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 16
@@ -339,7 +340,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 17
@@ -353,7 +354,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 18
@@ -367,7 +368,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 19
@@ -381,7 +382,7 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
 
     // 20
@@ -395,8 +396,38 @@ async function sendingData() {
     await new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 500);
+        }, writingTimeout);
     });
+
+    let service = null;
+
+    server
+        .getPrimaryService(dataTransferService.uuid)
+        .then((ser) => {
+            service = ser;
+            return service.getCharacteristic(
+                dataTransferService.characteristics.status.uuid
+            );
+        })
+        .then((characteristic) => {
+            // characteristic.oncharacteristicvaluechanged = handleStatusTransferData;
+            // console.log("prepare to sending data 2...");
+            // return service.getCharacteristic(
+            //     dataTransferService.characteristics.dataReceive.uuid
+            // );
+            return characteristic.readValue();
+        })
+        .then((value) => {
+            handleStatusTransferData(value);
+            // characteristicWrite = characteristic;
+            // console.log("prepare to sending data 3...");
+            // setTimeout(() => sendingData(), 2000);
+            // // sendingData();
+        })
+        .catch((error) => {
+            // dispatch(showAppPreloader(false));
+            console.log("read status error: " + error);
+        });
 
     // for (
     //     let sum = 0;
