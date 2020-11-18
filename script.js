@@ -1,6 +1,8 @@
 let connectBtn = document.getElementById("connect");
 
 connectBtn.addEventListener("click", function (event) {
+    let server = null;
+
     navigator.bluetooth
         .requestDevice({
             acceptAllDevices: true,
@@ -14,27 +16,55 @@ connectBtn.addEventListener("click", function (event) {
             ],
         })
         .then((device) => {
+            console.log('Device', device);
             return device.gatt.connect();
         })
-        .then((server) => {
-            return server.getPrimaryService("battery_service");
+        .then((ser) => {
+            console.log('Server', ser);
+            server = ser;
+            return server.getPrimaryService(dataTransferService.uuid);
         })
         .then((service) => {
-            return service.getCharacteristic("battery_level");
+            console.log('Service', service);
+            return service.getCharacteristic(
+                // dataTransferService.characteristics.controlTransmit.uuid
+                "5cf052d4-2403-4719-a558-b7e72c48112f"
+            );
         })
         .then((characteristic) => {
             // Reading Battery Level…
             return characteristic.startNotifications();
         })
         .then((characteristic) => {
+            console.log('Notification control transmit', server);
+
             characteristic.addEventListener(
                 "characteristicvaluechanged",
                 handleNotifications
             );
-            return characteristic.readValue();
+
+            return server.getPrimaryService(dataTransferService.uuid);
+            // return characteristic.readValue();
         })
-        .then((value) => {
-            console.log("read battery_level value: ", value.getUint8(0));
+        .then((service) => {
+            return service.getCharacteristic(
+                dataTransferService.characteristics.controlReceive.uuid
+            );
+        })
+        .then((characteristic) => {
+            let buffer = new ArrayBuffer(20);
+            let msgKeyWord8 = 0x0a;
+            let operationCode = 0xff;
+            // let dataSize32 = 0x2334;
+            let dataSize32 = 9034;
+            let dataType16 = 0x6;
+
+            new DataView(buffer).setInt8(0, msgKeyWord8, true);
+            new DataView(buffer).setInt8(1, operationCode, true);
+            new DataView(buffer).setInt32(2, dataSize32, true);
+            new DataView(buffer).setInt16(6, dataType16, true);
+
+            characteristic.writeValue(new Int8Array(buffer));
         })
         .catch((error) => {
             console.error(error);
